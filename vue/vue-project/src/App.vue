@@ -15,7 +15,7 @@ function addChoice() {
 
 async function submitQuestion() {
   try {
-    const response = await axios.post('http://localhost:8000/questions/', question)
+    const response = await axios.post('http://backend:8000/questions/', question)
     responseMessage.value = response.data.message
   } catch (error) {
     console.error(error)

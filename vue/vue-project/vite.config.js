@@ -15,4 +15,10 @@ export default defineConfig({
       '@': fileURLToPath(new URL('./src', import.meta.url))
     },
   },
+  server: {
+    host: '0.0.0.0',  // Erlaube den Zugriff von außen
+    port: 8081,        // Optional: Setze explizit den Port (falls du auf 8081 bleiben willst)
+  },
 })
+
+

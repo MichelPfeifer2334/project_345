@@ -39,7 +39,7 @@ db_dependency = Annotated[Session, Depends(get_db)]
 
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["*"], # List of allowed origins
+    allow_origins=["http://localhost:8081"], # List of allowed origins
     allow_credentials=True, # Allow credentials (cookies, authorization headers, etc.)
     allow_methods=["*"], # Allow all HTTP methods
     allow_headers=["*"], # Allow all HTTP headers
