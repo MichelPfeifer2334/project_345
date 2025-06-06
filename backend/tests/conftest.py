@@ -2,7 +2,7 @@ import pytest
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
 from backend.app.database import Base
-from app.main import app, get_db
+from backend.app.main import app, get_db
 from fastapi.testclient import TestClient
 import sys
 from pathlib import Path
@@ -27,7 +27,7 @@ def setup_db():
     Base.metadata.drop_all(bind=engine)
 
 # 2. Test-DB Session für jeden Test
-@pytest.fixture()
+@pytest.fixture(scope="session")
 def db():
     db = TestingSessionLocal()
     try:
@@ -35,15 +35,16 @@ def db():
     finally:
         db.close()
 
-# 3. Dependency Override für get_db: Testdatenbank verwenden
-@app.dependency_overrides[get_db]
-def override_get_db():
-    return next(db())
-
 # 4. Test-Client
 @pytest.fixture()
 def client():
     return TestClient(app)
+
+# 3. Dependency Override für get_db: Testdatenbank verwenden
+@pytest.fixture(scope="session", autouse=True)
+def override_get_db(db):
+    app.dependency_overrides[get_db] = lambda: db
+
 
 
 
