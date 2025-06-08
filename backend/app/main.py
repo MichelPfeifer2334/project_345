@@ -1,8 +1,8 @@
 from fastapi import FastAPI, Depends
 from pydantic import BaseModel
 from typing import List, Annotated
-from .models import Question, Choices
-from .database import engine, SessionLocal, Base
+from models import Question, Choices
+from database import engine, SessionLocal, Base
 from sqlalchemy.orm import Session
 from fastapi.middleware.cors import CORSMiddleware
 from contextlib import asynccontextmanager
