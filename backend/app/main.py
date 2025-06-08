@@ -16,6 +16,7 @@ TODO: Auswertung von Fragen ins Frontend
     - Anzahl richtige Antworten pro Frage
     - Irgendein Chart Package verwenden
 TODO: OpenSource Sprachmodell zur Kategorisierung von Fragen und dann auch Auswertung ins Frontend
+TODO: README ausführlicher
 """
 
 app = FastAPI()
