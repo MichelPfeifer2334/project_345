@@ -7,7 +7,16 @@ from sqlalchemy.orm import Session
 from fastapi.middleware.cors import CORSMiddleware
 from contextlib import asynccontextmanager
 
-
+"""
+TODO: Übersicht von Fragen ins Frontend
+    - Backend Verknüofung get questions Endpoint
+TODO: Auswertung von Fragen ins Frontend
+    - Anzahl der Fragen
+    - Anzahl Antworten pro Frage
+    - Anzahl richtige Antworten pro Frage
+    - Irgendein Chart Package verwenden
+TODO: OpenSource Sprachmodell zur Kategorisierung von Fragen und dann auch Auswertung ins Frontend
+"""
 
 app = FastAPI()
 
@@ -63,6 +72,21 @@ async def create_question(question: QuestionBase, db: db_dependency):
 
     db.commit()
     return {"message": "Question created successfully", "question_id": db_question.id}
+
+
+@app.get("/questions/")
+async def get_questions(db: db_dependency):
+    questions = db.query(Question).all()
+    result = []
+    for question in questions:
+        choices = db.query(Choices).filter(Choices.question_id == question.id).all()
+        result.append({
+            "question_text": question.question_text,
+            "choices": [{"choice_text": choice.choice_text, "is_correct": choice.is_correct} for choice in choices]
+        })
+    return result 
+
+
 
 if __name__ == "__main__":
     import uvicorn
